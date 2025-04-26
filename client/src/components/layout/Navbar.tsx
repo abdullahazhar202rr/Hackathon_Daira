@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
             <span className="ml-2 text-xl font-bold">FixConnect</span>
           </Link>
 
-          
+         
           <div className="hidden md:flex space-x-8 items-center">
             <Link to="/search" className={`${linkClass} font-medium`}>
               Find Services
@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        
+      
         {isOpen && (
           <div className="md:hidden bg-white text-gray-800 shadow-lg rounded-b-lg absolute left-0 right-0 z-50 transition-all duration-300 ease-in-out">
             <div className="flex flex-col space-y-4 px-4 py-6">
