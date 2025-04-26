@@ -1,8 +1,8 @@
 import React from 'react';
 import { Search, Calendar, CheckCircle, ArrowRight } from 'lucide-react';
 
-const HowItWorks: React.FC=()=> {
-  const steps=[
+const HowItWorks: React.FC = () => {
+  const steps = [
     {
       id: 1,
       title: 'Search',

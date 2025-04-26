@@ -16,8 +16,8 @@ const Testimonials: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-   
-    axios.get('http://localhost:5000/api/testimonials') 
+    // Fetch data from the backend API
+    axios.get('http://localhost:5000/api/testimonials') // Adjust the URL based on your server setup
       .then(response => {
         setTestimonials(response.data);
         setLoading(false);
@@ -29,7 +29,7 @@ const Testimonials: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>; // Display loading state while fetching data
   }
 
   return (
