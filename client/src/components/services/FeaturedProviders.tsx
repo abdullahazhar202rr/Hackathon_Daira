@@ -21,15 +21,15 @@ const FeaturedProviders: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // API URL - Update this with your actual backend endpoint
+
   const API_URL = 'http://localhost:5000/providers';
 
   useEffect(() => {
     const fetchProviders = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get(API_URL); // Get provider data from backend
-        setProviders(response.data); // Assuming the backend sends an array of providers
+        const response = await axios.get(API_URL); 
+        setProviders(response.data); 
       } catch (err) {
         setError('Failed to load providers/No providers nearby');
         console.error('Error fetching providers:', err);
