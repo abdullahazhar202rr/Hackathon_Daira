@@ -1,23 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Search, MapPin } from 'lucide-react';
 
 interface SearchBarProps {
-  location: string;
-  setLocation: (location: string) => void;
-  service: string;
-  setService: (service: string) => void;
-  handleSearch: (e: React.FormEvent) => void;
+  setProviders: (providers: any[]) => void; // State setter for storing the fetched providers
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({
-  location,
-  setLocation,
-  service,
-  setService,
-  handleSearch
-}) => {
+const SearchBar: React.FC<SearchBarProps> = ({ setProviders }) => {
+  const [location, setLocation] = useState('');
+  const [service, setService] = useState('');
+
+  // Handle search form submission
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Fetch providers based on the location and service
+    try {
+      const response = await fetch(`http://localhost:5000/api/providers?location=${location}&service=${service}`);
+      const data = await response.json();
+      setProviders(data); // Update the parent component's state with the results
+    } catch (error) {
+      console.error('Error fetching providers:', error);
+    }
+  };
+
   return (
-    <form 
+    <form
       onSubmit={handleSearch}
       className="bg-white rounded-lg shadow-lg p-2 flex flex-col md:flex-row"
     >

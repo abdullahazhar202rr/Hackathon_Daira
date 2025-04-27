@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
-  
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,50 +20,48 @@ const Register: React.FC = () => {
       setError('All fields are required');
       return false;
     }
-    
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return false;
     }
-    
+
     if (password.length < 6) {
       setError('Password must be at least 6 characters');
       return false;
     }
-    
+
     return true;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    
-    if (!validateForm()) return;
-    
-    setIsLoading(true);
-    try {
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setError('');
 
-      const response = await axios.post('/api/register', {
-        name,
-        email,
-        password,
-        role,
-      });
+  //   if (!validateForm()) return;
 
-      
-      if (response.status === 200) {
-        navigate('/dashboard');
-      }
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('An error occurred during registration');
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await axios.post('/api/register', {
+  //       name,
+  //       email,
+  //       password,
+  //       role,
+  //     });
+
+  //     if (response.status === 201) {
+  //       navigate('/dashboard');
+  //     }
+  //   } catch (err) {
+  //     if (axios.isAxiosError(err) && err.response) {
+  //       setError(err.response.data.message || 'An error occurred during registration');
+  //     } else {
+  //       setError('An error occurred during registration');
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -74,13 +72,17 @@ const Register: React.FC = () => {
             Join our community of service providers and clients
           </p>
         </div>
-        
+
         {error && (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
             <div className="flex">
               <div className="flex-shrink-0">
                 <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
               <div className="ml-3">
@@ -89,10 +91,10 @@ const Register: React.FC = () => {
             </div>
           </div>
         )}
-        
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
 
+        <form className="mt-8 space-y-6"  method='POST' action='/api/register'>
+          <div className="space-y-4">
+            {/* Name Input */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 Full Name
@@ -113,8 +115,8 @@ const Register: React.FC = () => {
                 />
               </div>
             </div>
-            
 
+            {/* Email Input */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email Address
@@ -136,8 +138,8 @@ const Register: React.FC = () => {
                 />
               </div>
             </div>
-            
 
+            {/* Password Input */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
@@ -162,17 +164,13 @@ const Register: React.FC = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="text-gray-400 hover:text-gray-500 focus:outline-none"
                   >
-                    {showPassword ? (
-                      <EyeOff className="h-5 w-5" />
-                    ) : (
-                      <Eye className="h-5 w-5" />
-                    )}
+                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
                 </div>
               </div>
             </div>
-            
 
+            {/* Confirm Password Input */}
             <div>
               <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
                 Confirm Password
@@ -193,49 +191,55 @@ const Register: React.FC = () => {
                 />
               </div>
             </div>
-            
 
+            {/* Role Selection */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                I want to:
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">I want to:</label>
               <div className="grid grid-cols-2 gap-4">
-                <div 
-                  className={`
-                    border rounded-lg p-3 flex items-center cursor-pointer transition-colors
-                    ${role === 'client' 
-                      ? 'border-blue-500 bg-blue-50 text-blue-700' 
-                      : 'border-gray-300 hover:border-blue-300'}
-                  `}
+                <div
+                  className={`border rounded-lg p-3 flex items-center cursor-pointer transition-colors ${
+                    role === 'client'
+                      ? 'border-blue-500 bg-blue-50 text-blue-700'
+                      : 'border-gray-300 hover:border-blue-300'
+                  }`}
                   onClick={() => setRole('client')}
                 >
-                  <User className={`h-5 w-5 mr-2 ${role === 'client' ? 'text-blue-500' : 'text-gray-400'}`} />
+                  <User
+                    className={`h-5 w-5 mr-2 ${
+                      role === 'client' ? 'text-blue-500' : 'text-gray-400'
+                    }`}
+                  />
                   <span className="font-medium">Hire Services</span>
                 </div>
-                <div 
-                  className={`
-                    border rounded-lg p-3 flex items-center cursor-pointer transition-colors
-                    ${role === 'provider' 
-                      ? 'border-blue-500 bg-blue-50 text-blue-700' 
-                      : 'border-gray-300 hover:border-blue-300'}
-                  `}
+                <div
+                  className={`border rounded-lg p-3 flex items-center cursor-pointer transition-colors ${
+                    role === 'provider'
+                      ? 'border-blue-500 bg-blue-50 text-blue-700'
+                      : 'border-gray-300 hover:border-blue-300'
+                  }`}
                   onClick={() => setRole('provider')}
                 >
-                  <UserCheck className={`h-5 w-5 mr-2 ${role === 'provider' ? 'text-blue-500' : 'text-gray-400'}`} />
+                  <UserCheck
+                    className={`h-5 w-5 mr-2 ${
+                      role === 'provider' ? 'text-blue-500' : 'text-gray-400'
+                    }`}
+                  />
                   <span className="font-medium">Offer Services</span>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* Submit Button */}
           <div>
             <button
               type="submit"
               disabled={isLoading}
-              className={`
-                group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white
-                ${isLoading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'}
-              `}
+              className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
+                isLoading
+                  ? 'bg-blue-400 cursor-not-allowed'
+                  : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+              }`}
             >
               {isLoading ? 'Creating Account...' : 'Create Account'}
             </button>

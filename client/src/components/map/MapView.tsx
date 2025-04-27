@@ -6,7 +6,7 @@ interface Provider {
   name: string;
   profession: string;
   rating: number;
-  location: string;
+  location: string;  // Location as a string
   isAvailable: boolean;
   distance: number;
 }
@@ -24,25 +24,21 @@ const MapView: React.FC<MapViewProps> = ({ providers }) => {
           Interactive map would display here with provider locations
         </p>
       </div>
-      {providers.map((provider, index) => {
-        const left = 20 + (index * 30) % 70;
-        const top = 30 + (index * 15) % 40;
-        
-        return (
-          <div 
-            key={provider.id}
-            className="absolute cursor-pointer"
-            style={{ left: `${left}%`, top: `${top}%` }}
-          >
-            <div className={`p-1 rounded-full ${provider.isAvailable ? 'bg-green-500' : 'bg-blue-500'}`}>
-              <MapPin className="h-6 w-6 text-white" />
-            </div>
-            <div className="bg-white text-xs font-medium rounded shadow px-2 py-1 mt-1">
-              {provider.name}
-            </div>
+      {providers.map((provider) => (
+        <div 
+          key={provider.id}
+          className="absolute cursor-pointer"
+          style={{ left: '50%', top: '50%' }}  // Center all markers for now
+        >
+          <div className={`p-1 rounded-full ${provider.isAvailable ? 'bg-green-500' : 'bg-blue-500'}`}>
+            <MapPin className="h-6 w-6 text-white" />
           </div>
-        );
-      })}
+          <div className="bg-white text-xs font-medium rounded shadow px-2 py-1 mt-1">
+            {provider.name}
+            <p className="text-gray-500">{provider.location}</p> {/* Display the location */}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
