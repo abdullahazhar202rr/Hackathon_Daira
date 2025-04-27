@@ -11,13 +11,14 @@ import ServiceProviderProfile from './pages/ServiceProviderProfile';
 import SearchResults from './pages/SearchResults';
 import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
+import pic from '../public/Untitled_logo_4_free-file.jpg';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <ServiceProvider>
-          <div className="flex flex-col min-h-screen bg-gray-50">
+          <div className="realtive flex flex-col min-h-screen bg-gray-50">
             <Navbar />
             <main className="flex-grow">
               <Routes>
@@ -30,6 +31,7 @@ function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
+            <img src={pic} alt="ServiceMat." width={100} className=' left-[92vw]  rounded-full bottom-6 sticky'/>
             <Footer />
           </div>
         </ServiceProvider>
