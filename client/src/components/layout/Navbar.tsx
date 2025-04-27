@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
 
           <Link to="/" className="flex items-center">
             <Tool className={`h-8 w-8 ${isHomePage && !isScrolled ? 'text-white' : 'text-blue-600'}`} />
-            <span className="ml-2 text-xl font-bold">FixConnect</span>
+            <span className="ml-2 text-2xl font-bold">ServiceMat</span>
           </Link>
 
 
